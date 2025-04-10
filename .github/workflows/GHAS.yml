@@ -10,12 +10,17 @@ jobs:
   code-scanning:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Run CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+ 
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
         with:
-          category: 'security'
+          languages: javascript, python  # Change as per your project
+ 
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        
       - name: Fetch Code Scanning Alerts
         run: |
           curl -H "Authorization: token ${{ secrets.MY_GITHUB_TOKEN }}" \
