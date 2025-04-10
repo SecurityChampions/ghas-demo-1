@@ -23,7 +23,7 @@ jobs:
                https://api.github.com/repos/SecurityChampions/ghas-demo-1/code-scanning/alerts \
                -o code-scanning-alerts.json
       - name: Upload Code Scanning Alerts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: code-scanning-alerts
           path: code-scanning-alerts.json
@@ -40,7 +40,7 @@ jobs:
                https://api.github.com/repos/SecurityChampions/ghas-demo-1/secret-scanning/alerts \
                -o secret-scanning-alerts.json
       - name: Upload Secret Scanning Alerts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: secret-scanning-alerts
           path: secret-scanning-alerts.json
@@ -57,7 +57,7 @@ jobs:
                https://api.github.com/repos/SecurityChampions/ghas-demo-1/dependabot/alerts \
                -o dependabot-alerts.json
       - name: Upload Dependabot Alerts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: dependabot-alerts
           path: dependabot-alerts.json
