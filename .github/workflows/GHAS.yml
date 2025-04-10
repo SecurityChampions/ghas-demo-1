@@ -1,0 +1,63 @@
+name: Security Checks
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  code-scanning:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+        with:
+          category: 'security'
+      - name: Fetch Code Scanning Alerts
+        run: |
+          curl -H "Authorization: token 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" \
+               -H "Accept: application/vnd.github.v3+json" \
+               https://api.github.com/repos/SecurityChampions/ghas-demo-1/code-scanning/alerts \
+               -o code-scanning-alerts.json
+      - name: Upload Code Scanning Alerts
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-scanning-alerts
+          path: code-scanning-alerts.json
+
+  secret-scanning:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Fetch Secret Scanning Alerts
+        run: |
+          curl -H "Authorization: token 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" \
+               -H "Accept: application/vnd.github.v3+json" \
+               https://api.github.com/repos/SecurityChampions/ghas-demo-1/secret-scanning/alerts \
+               -o secret-scanning-alerts.json
+      - name: Upload Secret Scanning Alerts
+        uses: actions/upload-artifact@v2
+        with:
+          name: secret-scanning-alerts
+          path: secret-scanning-alerts.json
+
+  dependabot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Fetch Dependabot Alerts
+        run: |
+          curl -H "Authorization: token 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" \
+               -H "Accept: application/vnd.github.v3+json" \
+               https://api.github.com/repos/SecurityChampions/ghas-demo-1/dependabot/alerts \
+               -o dependabot-alerts.json
+      - name: Upload Dependabot Alerts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dependabot-alerts
+          path: dependabot-alerts.json
