@@ -42,6 +42,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
+      - name: secret-scanning-custom-action
+        uses: advanced-security/secret-scanning-tools@v1
+        
       - name: Fetch Secret Scanning Alerts
         run: |
           curl -H "Authorization: token ${{ secrets.MY_GITHUB_TOKEN }}" \
